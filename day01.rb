@@ -10,11 +10,31 @@ expenses.each do |e|
 end
 
 # Part 2
-for i in 0..(expenses.length - 3)
-  for j in (i + 1)..(expenses.length - 2)
-    for k in (j + 1)..(expenses.length - 1)
+# Naive algorithm
+for i in 0...(expenses.length - 2)
+  for j in (i + 1)...(expenses.length - 1)
+    for k in (j + 1)...(expenses.length)
       sum = expenses[i] + expenses[j] + expenses[k]
-      puts expenses[i] * expenses[j] * expenses[k] if sum == 2020
+      puts "The 3 numbers, multiplied, equals #{expenses[i] * expenses[j] * expenses[k]}." if sum == 2020
+    end
+  end
+end
+
+# Part 2
+# Improved algorithm
+expenses.sort!
+for i in 0...(expenses.length - 2)
+  left = i + 1
+  right = expenses.length - 1
+  while left < right
+    sum = expenses[i] + expenses[left] + expenses[right]
+    if sum == 2020
+      puts "The 3 numbers, multiplied, equals #{expenses[i] * expenses[left] * expenses[right]}."
+      break
+    elsif sum < 2020
+      left += 1
+    else
+      right -= 1
     end
   end
 end
