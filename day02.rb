@@ -1,5 +1,5 @@
-# Part 1
-valid = 0
+valid1 = 0
+valid2 = 0
 input = File.readlines("input/day02.txt", chomp: true)
 input.each do |line|
   arr = line.split(' ')
@@ -7,20 +7,14 @@ input.each do |line|
   min = range[0].to_i
   max = range[1].to_i
   char = arr[1].tr(':', '')
-  valid += 1 if arr[2].count(char) >= min && arr[2].count(char) <= max
-end
-puts "#{valid} passwords are valid."
 
-# Part 2
-valid = 0
-input.each do |line|
-  arr = line.split(' ')
-  range = arr[0].split('-')
-  pos1 = range[0].to_i - 1
-  pos2 = range[1].to_i - 1
-  char = arr[1].tr(':', '')
-  one = arr[2][pos1] == char || arr[2][pos2] == char
-  both = arr[2][pos1] == char && arr[2][pos2] == char
-  valid += 1 if one && !both
+  # Part 1
+  valid1 += 1 if arr[2].count(char) >= min && arr[2].count(char) <= max
+
+  # Part 2
+  one = arr[2][min - 1] == char || arr[2][max - 1] == char
+  both = arr[2][min - 1] == char && arr[2][max - 1] == char
+  valid2 += 1 if one && !both
 end
-puts "#{valid} passwords are valid."
+puts "Part 1: #{valid1} passwords are valid."
+puts "Part 2: #{valid2} passwords are valid."
