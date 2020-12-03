@@ -6,7 +6,7 @@ input.each do |line|
   range = arr[0].split('-')
   min = range[0].to_i
   max = range[1].to_i
-  char = arr[1].tr(':', '')
+  char = arr[1][0]
 
   # Part 1
   valid1 += 1 if arr[2].count(char) >= min && arr[2].count(char) <= max
