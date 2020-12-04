@@ -2,17 +2,10 @@ input = File.readlines("input/day04.txt", chomp: true)
 input.append("") # my buffer
 
 # all of the required passport fields
-required = {
-    byr: 0,
-    iyr: 1,
-    eyr: 2,
-    hgt: 3,
-    hcl: 4,
-    ecl: 5,
-    pid: 6,
-}
+required = {byr: 0, iyr: 1, eyr: 2, hgt: 3, hcl: 4, ecl: 5, pid: 6}
 
 def is_valid(key, value)
+  eye_colour = {amb: 1, blu: 1, brn: 1, gry: 1, grn: 1, hzl: 1, oth: 1} # valid eye colours
   case key
   when "byr"
     value.to_i >= 1920 && value.to_i <= 2002
@@ -24,11 +17,11 @@ def is_valid(key, value)
     false if value.length < 4 || value.length > 5
     case value[-2..-1]
     when "cm"
-      false if value.length < 5
+      false if value.length != 5
       height = value[0..2].to_i
       height >= 150 && height <= 193
     when "in"
-      false if value.length > 4
+      false if value.length != 4
       height = value[0..1].to_i
       height >= 59 && height <= 76
     else
@@ -37,16 +30,6 @@ def is_valid(key, value)
   when "hcl"
     value.match?(/\A#[0-9a-f]{6}\z/)
   when "ecl"
-    # valid eye colours
-    eye_colour = {
-        amb: true,
-        blu: true,
-        brn: true,
-        gry: true,
-        grn: true,
-        hzl: true,
-        oth: true,
-    }
     eye_colour.has_key? value.to_sym
   when "pid"
     value.match?(/\A[0-9]{9}\z/)
