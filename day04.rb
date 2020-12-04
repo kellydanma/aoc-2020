@@ -5,7 +5,7 @@ input.append("") # my buffer
 required = {byr: 0, iyr: 1, eyr: 2, hgt: 3, hcl: 4, ecl: 5, pid: 6}
 
 def is_valid(key, value)
-  eye_colour = {amb: 1, blu: 1, brn: 1, gry: 1, grn: 1, hzl: 1, oth: 1} # valid eye colours
+  eye_clr = %w[amb blu brn gry grn hzl oth] # valid eye colours
   case key
   when "byr"
     value.to_i >= 1920 && value.to_i <= 2002
@@ -30,7 +30,7 @@ def is_valid(key, value)
   when "hcl"
     value.match?(/\A#[0-9a-f]{6}\z/)
   when "ecl"
-    eye_colour.has_key? value.to_sym
+    eye_clr.include? value
   when "pid"
     value.match?(/\A[0-9]{9}\z/)
   else
