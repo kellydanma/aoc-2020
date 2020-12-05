@@ -1,36 +1,41 @@
 input = File.readlines("input/day05.txt", chomp: true)
 
-# A really bad binary search.
-def b_search(arr, iter, lo, hi, char, pos)
-  iter.times do
-    mid = (lo + hi) / 2
-    if arr[pos] == char
-      hi = mid
-    else
-      lo = mid + 1
-    end
-    pos += 1
-  end
-  return lo # I could also return hi, it's the same.
-end
-
 highest_id = -1
 seats = []
 
 # Part 1
+# Using binary numbers
 input.each do |line|
-  row = b_search(line, 7, 0, 127, 'F', 0)
-  col = b_search(line, 3, 0, 7, 'L', 7)
-  id = row * 8 + col
-  highest_id = id if id > highest_id
+  id = 0
+  for i in 0..9 do
+    id += 1 << (9-i) if line[i] == 'B' || line[i] == 'R'
+  end
   seats.append(id)
+  highest_id = id if id > highest_id
 end
 puts "Part 1: The highest seat ID is #{highest_id}."
 
 # Part 2
 seats.sort!
 for i in 0..seats.length - 2 do
-  if seats[i + 1] - seats[i] == 2
-    puts "Part 2: Your seat is #{seats[i] + 1}."
+  puts "Part 2: Your seat is #{seats[i] + 1}." if seats[i + 1] - seats[i] == 2
+end
+
+# Part 1 (old implementation)
+# Using a binary search
+input.each do |line|
+  i = 0
+  lo = 0
+  hi = 1023
+  10.times do
+    mid = (lo + hi) / 2
+    if line[i] == 'F' || line[i] == 'L'
+      hi = mid
+    else
+      lo = mid + 1
+    end
+    i += 1
   end
+  seats.append(lo)
+  highest_id = lo if lo > highest_id
 end
