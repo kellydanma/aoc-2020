@@ -6,3 +6,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 2. [Day 2: Password Philosophy](./day02.rb)
 3. [Day 3: Toboggan Trajectory](./day03.rb)
 4. [Day 4: Passport Processing](./day04.rb)
+5. [Day 5: Binary Boarding](./day05.rb)
