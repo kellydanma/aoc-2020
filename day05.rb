@@ -1,6 +1,7 @@
 input = File.readlines("input/day05.txt", chomp: true)
 
 highest_id = -1
+seats = []
 
 input.each do |line|
   pos = 0
@@ -28,7 +29,15 @@ input.each do |line|
     pos += 1
   end
   id = row * 8 + lo
+  seats.append(id)
   highest_id = id if id > highest_id
 end
 
 puts "Part 1: the highest seat ID is #{highest_id}."
+
+seats.sort!
+for i in 0..seats.length-2 do
+  if seats[i+1]-seats[i] ==2
+    puts "Part 2: your seat is #{seats[i]+1}."
+  end
+end
