@@ -8,7 +8,7 @@ seats = []
 input.each do |line|
   id = 0
   for i in 0..9 do
-    id += 1 << (9-i) if line[i] == 'B' || line[i] == 'R'
+    id += 1 << (9 - i) if line[i] == 'B' || line[i] == 'R'
   end
   seats.append(id)
   highest_id = id if id > highest_id
