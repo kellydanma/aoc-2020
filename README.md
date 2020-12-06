@@ -7,3 +7,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 3. [Day 3: Toboggan Trajectory](./day03.rb)
 4. [Day 4: Passport Processing](./day04.rb)
 5. [Day 5: Binary Boarding](./day05.rb)
+6. [Day 6: Custom Customs](./day06.rb)
