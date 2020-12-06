@@ -1,35 +1,26 @@
 input = File.readlines("input/day06.txt", chomp: true)
-input.append("")
+input.append("") # my buffer
 
-# Part 1
-yes = 0
-letters = []
+some = 0 # Part 1
+arr1 = [0] * 26
+
+all = 0  # Part 2
+arr2 = [1] * 26
+
 input.each do |line|
   if line.length == 0
-    yes += letters.uniq.length
-    letters = []
+    some += arr1.inject(:+)
+    all += arr2.inject(:+)
+    arr1= [0] * 26
+    arr2= [1] * 26
   else
     chars = line.split('')
-    chars.each { |c| letters.append(c) }
-  end
-end
-puts "Part 1: #{yes} answers."
-
-# Part 2
-yes = 0
-letters = Hash.new(1)
-nr_people = 0
-input.each do |line|
-  if line.length == 0
-    letters.each do |l, c|
-      yes += 1 if c == nr_people
+    for i in 0..25 do
+      arr1[i] |= 1 if chars.include?((i+97).chr)
+      arr2[i] &= 0 if !(chars.include?((i+97).chr))
     end
-    letters = Hash.new(0)
-    nr_people = 0
-  else
-    nr_people += 1
-    chars = line.split('')
-    chars.each { |c| letters[c] += 1 }
   end
 end
-puts "Part 2: #{yes} answers."
+
+puts "Part 1: #{some} answers."
+puts "Part 2: #{all} answers."
