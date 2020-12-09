@@ -12,3 +12,13 @@ def bags.contains?(outer)
 end
 
 puts "Part 1: #{bags.keys.count { |bag| bags.contains?(bag) }} bags."
+
+# Part 2
+def bags.nr_bags_in(outer)
+  total = 0
+  inner = self[outer]
+  inner.each { |i| total += i[0] + i[0] * nr_bags_in(i[1]) }
+  return total
+end
+
+puts "Part 2: #{bags.nr_bags_in("shiny gold bag") } bags."
