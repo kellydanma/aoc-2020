@@ -11,3 +11,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 7. [Day 7: Handy Haversacks](./day07.rb)
 8. [Day 8: Handheld Halting](./day08.rb)
 9. [Day 9: Day 9: Encoding Error](./day09.rb)
+10. [Day 10: Adapter Array](./day10.rb)
