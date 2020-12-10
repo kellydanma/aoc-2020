@@ -10,3 +10,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 6. [Day 6: Custom Customs](./day06.rb)
 7. [Day 7: Handy Haversacks](./day07.rb)
 8. [Day 8: Handheld Halting](./day08.rb)
+9. [Day 9: Day 9: Encoding Error](./day09.rb)
