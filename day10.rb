@@ -1,14 +1,15 @@
 jolts = File.readlines('input/day10.txt', chomp: true).map { |line| line.to_i }.to_a
+sorted = jolts.sort.unshift(0)
+sorted = sorted + [sorted[sorted.length - 1] + 3]
 
 # Part 1
-sorted = jolts.sort.unshift(0)
-one = 0
-three = 1
-(0...sorted.length - 1).each { |i|
-  one += 1 if sorted[i + 1] - sorted[i] == 1
-  three += 1 if sorted[i + 1] - sorted[i] == 3
-}
-puts "Part 1: 1-jolt diffs * 3-jolt diffs = #{one * three}."
+def diffs(adapters)
+  diff = Hash.new(0)
+  adapters.each_cons(2).map { |a, b| diff[b - a] += 1 }
+  diff[1] * diff[3]
+end
+
+puts "Part 1: 1-jolt diffs * 3-jolt diffs = #{diffs(sorted)}."
 
 # Part 2
 def combos(adapters, dp, n)
@@ -17,5 +18,4 @@ def combos(adapters, dp, n)
   dp[n] ||= (1..3).sum { |x| combos(adapters, dp, n - x) }
 end
 
-sorted = sorted + [sorted[sorted.length - 1] + 3]
 puts "Part 2: #{combos(sorted, [], sorted.last)} possible combinations."
