@@ -5,7 +5,7 @@ sorted = sorted + [sorted[sorted.length - 1] + 3]
 # Part 1
 def diffs(adapters)
   diff = Hash.new(0)
-  adapters.each_cons(2).map { |a, b| diff[b - a] += 1 }
+  adapters.each_cons(2) { |a, b| diff[b - a] += 1 }
   diff[1] * diff[3]
 end
 
