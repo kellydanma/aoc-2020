@@ -16,3 +16,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 12. [Day 12: Rain Risk](./day12.rb)
 13. [Day 13: Shuttle Search](./day13.rb)
 14. [Day 14: Docking Data](./day14.rb)
+15. [Day 15: Rambunctious Recitation](./day15.rb)
