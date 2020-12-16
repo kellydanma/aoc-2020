@@ -17,3 +17,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 13. [Day 13: Shuttle Search](./day13.rb)
 14. [Day 14: Docking Data](./day14.rb)
 15. [Day 15: Rambunctious Recitation](./day15.rb)
+16. [Day 16: Ticket Translation](./day16.rb)
