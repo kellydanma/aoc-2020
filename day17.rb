@@ -1,24 +1,20 @@
-initial_state = File.readlines('input/day17.txt', chomp: true).map { |l| l.to_s.split('') }.to_a
+# Process data
+cubes = Hash.new('.')
+File.readlines('input/day17.txt', chomp: true).each_with_index.map { |row, x|
+  row.split('').each_with_index.map { |col, y| cubes[[x, y, 0]] = col } }
 
-def change_state(grid, position)
+def nr_active_cubes(grid, position)
   permutations = [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]]
   neighbours = permutations.shift.product(*permutations)
   neighbours.delete([0, 0, 0])
-
-  active = 0
-  neighbours.each do |dx, dy, dz|
+  neighbours.map do |dx, dy, dz|
     x, y, z = position
-    x += dx
-    y += dy
-    z += dz
-    next if x < 0 || x > grid.length - 1
-    next if y < 0 || y > grid[0].length - 1
-    next if z < 0 || z > grid[0][0].length - 1
-    active += 1 if grid[x][y][z] == "#"
-  end
+    x += dx; y += dy; z += dz
+    grid[[x, y, z]] == "#" ? 1 : 0
+  end.sum
+end
 
-  x, y, z = position
-  cur_state = grid[x][y][z]
+def change_state(active, cur_state)
   case cur_state
   when "." then
     return "#" if active == 3
@@ -27,3 +23,20 @@ def change_state(grid, position)
   end
   cur_state
 end
+
+def count(grid, cycles)
+  (1..cycles).each do |i|
+    i *= -1
+    copy = grid.clone
+    bounds = grid.keys.transpose
+    (i..bounds[0].max + 1).each { |x|
+      (i..bounds[1].max + 1).each { |y|
+        (i..bounds[2].max + 1).each { |z|
+          active = nr_active_cubes(grid, [x, y, z])
+          copy[[x, y, z]] = change_state(active, grid[[x, y, z]]) } } }
+    grid = copy
+  end
+  grid.values.count { |c| c == '#' }
+end
+
+puts "Part 1: #{count(cubes, 6)}"
