@@ -16,7 +16,7 @@ data = File.read('input/day19.txt', chomp: true).split("\r\n\r\n")
   [nr, rule]
 }.to_h
 
-def parenthesize(str)
+def group(str)
   "(?:" + str + ")" # ?: means to group, but don't remember the grouped part.
 end
 
@@ -25,8 +25,8 @@ def regex_helper(rules, key, cache, max_length)
   max_length -= 1
   return "" if max_length == 0
   return key unless next_rule # returns a key = a or b
-  groups = next_rule.map { |g| g.map { |sub| build_regex(rules, sub, cache, max_length) }.join("") }.join("|")
-  groups.include?("|") ? parenthesize(groups) : groups
+  matches = next_rule.map { |g| g.map { |sub| build_regex(rules, sub, cache, max_length) }.join("") }.join("|")
+  matches.include?("|") ? group(matches) : matches
 end
 
 def build_regex(rules, key, cache, max_length)
