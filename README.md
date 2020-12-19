@@ -19,3 +19,4 @@ My solutions to [Advent of Code](https://adventofcode.com/), whilst trying to le
 15. [Day 15: Rambunctious Recitation](./day15.rb)
 16. [Day 16: Ticket Translation](./day16.rb)
 17. [Day 17: Conway Cubes](./day17.rb)
+18. [Day 18: Operation Order](./day18.rb)
