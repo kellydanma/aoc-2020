@@ -21,17 +21,17 @@ def group(str)
   "(?:" + str + ")" # ?: means to group, but don't remember the grouped part.
 end
 
-def regex_helper(rules, key, cache, max_length)
+def regex_helper(rules, key, cache, length)
   next_rule = rules[key]
-  max_length -= 1
-  return "" if max_length == 0
+  length -= 1
+  return "" if length == 0
   return key unless next_rule # returns a key = a or b
-  matches = next_rule.map { |g| g.map { |sub| build_regex(rules, sub, cache, max_length) }.join("") }.join("|")
+  matches = next_rule.map { |m| m.map { |sub_match| build_regex(rules, sub_match, cache, length) }.join("") }.join("|")
   matches.include?("|") ? group(matches) : matches
 end
 
-def build_regex(rules, key, cache, max_length)
-  cache[key] ||= regex_helper(rules, key, cache, max_length)
+def build_regex(rules, key, cache, length)
+  cache[key] ||= regex_helper(rules, key, cache, length)
   # cache stores a map of regex for a specific rule:
   # eg. Given rules like,
   # 0: 4 1 5
