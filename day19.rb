@@ -17,6 +17,7 @@ data = File.read('input/day19.txt', chomp: true).split("\r\n\r\n")
 }.to_h
 
 def group(str)
+  # See https://stackoverflow.com/questions/3705842/what-does-do-in-regex
   "(?:" + str + ")" # ?: means to group, but don't remember the grouped part.
 end
 
