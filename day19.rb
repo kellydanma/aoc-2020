@@ -17,18 +17,20 @@ data = File.read('input/day19.txt', chomp: true).split("\r\n\r\n")
 }.to_h
 
 def parenthesize(str)
-  "(" + str + ")"
+  "(?:" + str + ")" # ?: means to group, but don't remember the grouped part.
 end
 
-def regex_helper(rules, key, cache)
+def regex_helper(rules, key, cache, max_length)
   next_rule = rules[key]
+  max_length -= 1
+  return "" if max_length == 0
   return key unless next_rule # returns a key = a or b
-  groups = next_rule.map { |g| g.map { |sub| build_regex(rules, sub, cache) }.join("") }.join("|")
+  groups = next_rule.map { |g| g.map { |sub| build_regex(rules, sub, cache, max_length) }.join("") }.join("|")
   groups.include?("|") ? parenthesize(groups) : groups
 end
 
-def build_regex(rules, key, cache)
-  cache[key] ||= regex_helper(rules, key, cache)
+def build_regex(rules, key, cache, max_length)
+  cache[key] ||= regex_helper(rules, key, cache, max_length)
   # cache stores a map of regex for a specific rule:
   # eg. Given rules like,
   # 0: 4 1 5
@@ -37,13 +39,18 @@ def build_regex(rules, key, cache)
   # 3: 4 5 | 5 4
   # 4: "a"
   # 5: "b"
-  # cache = {"a"=>"a", 4=>"a", "b"=>"b", 5=>"b", 2=>"(aa|bb)", 3=>"(ab|ba)", 1=>"((aa|bb)(ab|ba)|(ab|ba)(aa|bb))"}
+  # cache = {"a"=>"a", 4=>"a", "b"=>"b", 5=>"b", 2=>"(?:aa|bb)", 3=>"(?:ab|ba)", 1=>"(?:(?:a
+  # a|bb)(?:ab|ba)|(?:ab|ba)(?:aa|bb))"}
 end
 
-def valid_messages(rules, first_rule, messages)
-  rule_regex = Regexp.new("^#{build_regex(rules, first_rule, {})}$")
+def valid_messages(rules, first_rule, messages, max_length)
+  rule_regex = Regexp.new("^#{build_regex(rules, first_rule, {}, max_length)}$")
   messages.map { |n| rule_regex.match?(n) ? 1 : 0 }.sum
 end
 
-puts "Part 1: #{valid_messages(@rules, 0, @messages)} messages."
+max_length = @messages.map { |m| m.length }.max
+puts "Part 1: #{valid_messages(@rules, 0, @messages, max_length)} messages."
 
+@rules[8] = [[42], [42, 8]]
+@rules[11] = [[42, 31], [42, 11, 31]]
+puts "Part 2: #{valid_messages(@rules, 0, @messages, max_length)} messages."
