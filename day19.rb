@@ -3,8 +3,8 @@ data = File.read('input/day19.txt', chomp: true).split("\r\n\r\n")
 @rules = data.first.lines.map { |l|
   nr = l[/\d+:/].delete_suffix(':').to_i
   l = l.delete_prefix(l[/\d+:/]).to_s
-  if l.match?(/[a-b]/)
-    rule = [[l[/[a-b]/]]]
+  if l.match?(/[ab]/)
+    rule = [[l[/[ab]/]]]
   elsif l.match?(/\|/)
     arr = l.split('|')
     rule1 = arr[0].split(' ').map { |n| n.to_i }
@@ -29,6 +29,15 @@ end
 
 def build_regex(rules, key, cache)
   cache[key] ||= regex_helper(rules, key, cache)
+  # cache stores a map of regex for a specific rule:
+  # eg. Given rules like,
+  # 0: 4 1 5
+  # 1: 2 3 | 3 2
+  # 2: 4 4 | 5 5
+  # 3: 4 5 | 5 4
+  # 4: "a"
+  # 5: "b"
+  # cache = {"a"=>"a", 4=>"a", "b"=>"b", 5=>"b", 2=>"(aa|bb)", 3=>"(ab|ba)", 1=>"((aa|bb)(ab|ba)|(ab|ba)(aa|bb))"}
 end
 
 def valid_messages(rules, first_rule, messages)
